@@ -28,8 +28,10 @@ function playRound(playerSelection, computerSelection) {
             case "paper": 
                 return "It's a draw!";
             case "scissor": 
+                computerPoints += 1;
                 return "You lose, scissor beats paper!";
             case "rock": 
+                playerPoints += 1;
                 return "You win, paper beats rock!";
         }
     } else if (playerSelection == "scissor") {
@@ -37,19 +39,26 @@ function playRound(playerSelection, computerSelection) {
             case "scissor": 
                 return "It's a draw!";
             case "paper": 
+                playerPoints += 1;
                 return "You win, scissor beats paper!";
             case "rock": 
+                computerPoints += 1;
                 return "You lose, rock beats scissor!";
         }
-    } else return "Please enter a valid play.";
+    }
 }
 
 function game() {
     for (let i = 0; i < 5; i++) {
-        const playerSelection = "rock".toLowerCase();
+        const playerSelection = prompt("Let's play rock, paper, scissors!");
         const computerSelection = computerPlay().toLowerCase();
-      
-        console.log(playRound(playerSelection, computerSelection));
+        
+        if (playerSelection.toLowerCase() != "rock" && playerSelection.toLowerCase() != "paper" && playerSelection.toLowerCase() != "scissor") {
+            --i;
+            console.log("Please enter valid play.");
+            continue;
+        }
+        console.log(playRound(playerSelection.toLowerCase(), computerSelection));
     }
 
     if (playerPoints > computerPoints)
