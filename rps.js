@@ -49,26 +49,47 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function game() {
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt("Let's play rock, paper, scissors!");
-        const computerSelection = computerPlay().toLowerCase();
-        
-        if (playerSelection.toLowerCase() != "rock" && playerSelection.toLowerCase() != "paper" && playerSelection.toLowerCase() != "scissor") {
-            --i;
-            console.log("Please enter valid play.");
-            continue;
-        }
-        console.log(playRound(playerSelection.toLowerCase(), computerSelection));
+    playerScore.textContent = "Player score: " + playerPoints;
+    computerScore.textContent = "Computer score: " + computerPoints;
+    if (playerPoints == 5) {
+        result.textContent += " You got 5 points, you won the game!";
+        playerPoints = 0;
+        computerPoints = 0;
+    } else if (computerPoints == 5) {
+        result.textContent += " The computer got 5 points, you lost the game!";
+        playerPoints = 0;
+        computerPoints = 0;
     }
-
-    if (playerPoints > computerPoints)
-        console.log("You win!");
-    else if (playerPoints < computerPoints)
-        console.log("You lose!");
-    else console.log("It's a draw!");
 }
 
-let playerPoints = 0;
-let computerPoints = 0;
-game();
 
+playerPoints = 0;
+computerPoints = 0;
+
+const buttons = document.querySelectorAll('button');
+const result = document.querySelector('.result');
+result.setAttribute('style', 'border: 1px solid; borderColor: black')
+
+const playerScore = document.querySelector('.player-score');
+playerScore.setAttribute('style', 'border: 1px solid; borderColor: black')
+
+
+const computerScore = document.querySelector('.computer-score');
+computerScore.setAttribute('style', 'border: 1px solid; borderColor: black')
+
+
+buttons[0].addEventListener('click', () => {
+    result.textContent = playRound("rock", computerPlay());
+    game();
+    }
+)
+
+buttons[1].addEventListener('click', () => {
+    result.textContent = playRound("paper", computerPlay());
+    game();
+})
+
+buttons[2].addEventListener('click', () => {
+    result.textContent = playRound("scissor", computerPlay());
+    game();
+})
